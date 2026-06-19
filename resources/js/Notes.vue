@@ -1,7 +1,7 @@
 <template>
     <div class="max-w-4xl mx-auto p-6">
         <h1 class="text-3xl font-bold text-center mb-8">
-            📝 Note App
+             Note App
         </h1>
 
         <!-- Create Note -->
@@ -40,7 +40,8 @@
         </div>
 
         <!-- Filter -->
-        <div class="mb-6">
+         <div class="flex justify-between gap-2">
+            <div class="mb-6">
             <select
                 v-model="filter"
                 class="border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -51,8 +52,14 @@
                 <option value="high">High</option>
             </select>
         </div>
+        <p class="mb-4 text-gray-600">
+    Total Notes: {{ filteredNotes.length }}
+</p>
+        
+         </div>
+        
 
-        <!-- Loading/Error -->
+        <!-- Loadin -->
         <p v-if="loading" class="text-blue-600 font-medium">
             Loading...
         </p>
@@ -96,13 +103,22 @@
                     Archived
                 </p>
 
+
                 <button
-                    @click="archive(note.id)"
-                    :disabled="note.is_archived"
-                    class="bg-amber-500 hover:bg-amber-600 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg transition"
-                >
-                    Archive
-                </button>
+    v-if="!note.is_archived"
+    @click="archive(note.id)"
+    class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg"
+>
+    Archive
+</button>
+
+<button
+    v-else
+    @click="unarchive(note.id)"
+    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
+>
+    Unarchive
+</button>
             </div>
         </div>
 
@@ -154,7 +170,7 @@ const {loading,
     filteredNotes,
     fetchNotes,
     createNote,
-    archive, currentPage, lastPage } = useNotes();
+    archive, currentPage, lastPage, unarchive } = useNotes();
 
     onMounted(() => {
         fetchNotes()

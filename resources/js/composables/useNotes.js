@@ -37,6 +37,17 @@ export default function useNotes() {
     }
 
     const createNote = async () => {
+
+        if (!form.value.title.trim()) {
+            toast.error("Title is required");
+            return;
+        }
+
+        if (!form.value.content.trim()) {
+            toast.error("Content is required");
+            return;
+        }
+
         try {
             await axios.post('/api/notes', form.value)
 
@@ -61,8 +72,28 @@ export default function useNotes() {
             fetchNotes(currentPage.value)
             toast.success('Note archived successfully!');
         } catch (error) {
-            error.value = "Failed to archive note";
+
+            if (err.response?.status === 403) {
+                toast.error('This note cannot be archived');
+            } else {
+                toast.error('Failed to archive note');
+            }
             toast.success('Note archived failed!');
+
+            
+        }
+    }
+
+    const unarchive = async (id) => {
+        try {
+            await axios.patch(`/api/notes/${id}/unarchive`);
+
+            toast.success('Note unarchived successfully');
+
+            fetchNotes(currentPage.value);
+
+        } catch (err) {
+            toast.error('Failed to unarchive note');
         }
     }
 
@@ -84,7 +115,8 @@ export default function useNotes() {
         createNote,
         archive,
         currentPage,
-        lastPage
+        lastPage,
+        unarchive
     };
 
 

@@ -40,10 +40,26 @@ public function archive($id) {
         ], 403);
     }
 
+     $this->authorize('archive', $note);
+
     $note->is_archived = true;
     $note->save();
 
     return response()->json(['message' => 'Note Archived Successfully'], 201);
+}
+
+public function unarchive($id)
+{
+    $note = Note::findOrFail($id);
+
+    $note->update([
+        'is_archived' => false
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Note unarchived successfully'
+    ], 200);
 }
 
 }

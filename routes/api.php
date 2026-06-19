@@ -6,3 +6,4 @@ use App\Http\Controllers\NoteController;
 Route::get('/notes', [NoteController::class, 'index']);
 Route::post('/notes', [NoteController::class, 'store']);
 Route::patch('/notes/{id}/archive', [NoteController::class, 'archive']);
+Route::patch('/notes/{id}/unarchive', [NoteController::class, 'unarchive']);
