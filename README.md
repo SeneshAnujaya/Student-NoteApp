@@ -22,10 +22,10 @@
 * Success failed toast notifications
 * Responsive interface using Tailwind CSS
 * Unit test
+* Basic authorization policy
 
 ## Skipped Due To Time
 
-* Authentication
 * User for notes
 * Full authorization policy based on authenticated users
 
