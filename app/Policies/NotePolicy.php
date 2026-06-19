@@ -64,7 +64,7 @@ class NotePolicy
         return false;
     }
 
-    // public function archive(?User $user, Note $note): bool
+     public function archive(?User $user, Note $note): bool
     {
         return !$note->is_archived;
     }
